@@ -1,13 +1,8 @@
 import Head from 'next/head'
-import { signOut, useSession } from "next-auth/react";
 
-import { trpc } from "../utils/trpc";
+import GameShowcase from "@/root/components/GameShowcase/GameShowcase";
 
 export default function Home() {
-  const {data: sessionData} = useSession();
-
-
-
   return (
     <>
       <Head>
@@ -16,11 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
       <main>
-
-        <section className='mt-24'>
-          <button className='text-white' onClick={() => signOut()}>sign out</button>
-
-        </section>
+        <GameShowcase/>
       </main>
     </>
   )

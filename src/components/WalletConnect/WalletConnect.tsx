@@ -25,8 +25,6 @@ const WalletConnect = () => {
     }
   };
 
-  console.log(sessionData);
-
   return (
     <div>
 

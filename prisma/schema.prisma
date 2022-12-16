@@ -11,16 +11,47 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String  @id @unique
   chainId       Int?
   domain        String?
-  walletAddress String
   uri           String?
   version       String?
   nonce         String?
   profileId     String?
   name          String?
-  email         String?   @unique
+  email         String? @unique
+
+  games GamesOnUsers[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+model Game {
+  id          String @id @default(cuid())
+  ticketPrice Int
+  totalSum    Int
+  bigPrize    Int
+  winners     Int
+
+  users GamesOnUsers[]
+
+  @@map("games")
+}
+
+model GamesOnUsers {
+  user          User   @relation(fields: [walletAddress], references: [id])
+  walletAddress String // relation scalar field (used in the `@relation` attribute above)
+
+  game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
+
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([walletAddress, gameId])
+
+  @@map("games_and_users")
 }

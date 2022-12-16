@@ -1,0 +1,28 @@
+.ticketsBar {
+  height: 16px;
+  background: #131034;
+  margin: 30px auto;
+  border-radius: 10px;
+}
+
+.ticketsPercentageBar {
+  height: 100%;
+  background: #0086FF;
+  border-radius: 22px;
+  width: 70%;
+  position: relative;
+
+  &::after {
+    content: "2354";
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+.separator {
+  margin: 1.25rem 0;
+  border-top: 1px solid #4e4e4e;
+}

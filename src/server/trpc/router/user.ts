@@ -11,7 +11,7 @@ export const userRouter = router({
 
       const user = await prisma.user.findFirst({
         where: {
-          walletAddress,
+          id: walletAddress,
         },
       })
 
@@ -21,7 +21,7 @@ export const userRouter = router({
 
       return await prisma.user.create({
         data: {
-          walletAddress
+          id: walletAddress
         },
       });
     }),
