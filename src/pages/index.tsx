@@ -1,10 +1,12 @@
 import Head from 'next/head'
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 
 export default function Home() {
-  const hello = trpc.example.hello.useQuery({text: "from tRPC"});
+  const {data: sessionData} = useSession();
+
+
 
   return (
     <>
@@ -17,9 +19,7 @@ export default function Home() {
 
         <section className='mt-24'>
           <button className='text-white' onClick={() => signOut()}>sign out</button>
-          <p className="text-2xl text-white">
-            {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-          </p>
+
         </section>
       </main>
     </>
