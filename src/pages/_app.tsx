@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { createClient, configureChains, defaultChains, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { SessionProvider } from 'next-auth/react';
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import Header from "@/root/components/Header";
 
@@ -30,6 +31,7 @@ function MyApp({Component, pageProps}: AppProps) {
           <Header/>
           <Component {...pageProps} />
         </>
+        <ReactQueryDevtools />
       </SessionProvider>
     </WagmiConfig>
   );

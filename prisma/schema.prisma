@@ -6,12 +6,21 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id            String    @id @default(cuid())
+  chainId       Int?
+  domain        String?
+  walletAddress String
+  uri           String?
+  version       String?
+  nonce         String?
+  profileId     String?
+  name          String?
+  email         String?   @unique
+
+  @@map("users")
 }
