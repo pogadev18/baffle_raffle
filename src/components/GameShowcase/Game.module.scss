@@ -7,13 +7,13 @@
 
 .ticketsPercentageBar {
   height: 100%;
-  background: #0086FF;
+  background: #0086ff;
   border-radius: 22px;
   width: 70%;
   position: relative;
 
   &::after {
-    content: "2354";
+    content: '2354';
     color: #fff;
     position: absolute;
     right: 10px;

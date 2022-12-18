@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id            String  @id @unique
-  chainId       Int?
-  domain        String?
-  uri           String?
-  version       String?
-  nonce         String?
-  profileId     String?
-  name          String?
-  email         String? @unique
+  id        String  @id @unique
+  chainId   Int?
+  domain    String?
+  uri       String?
+  version   String?
+  nonce     String?
+  profileId String?
+  name      String?
+  email     String? @unique
 
   games GamesOnUsers[]
 
@@ -31,10 +31,10 @@ model User {
 
 model Game {
   id          String @id @default(cuid())
-  ticketPrice Int
-  totalSum    Int
-  bigPrize    Int
-  winners     Int
+  ticketPrice String
+  totalSum    String
+  bigPrize    String
+  winners     String
 
   users GamesOnUsers[]
 
@@ -52,6 +52,5 @@ model GamesOnUsers {
   assignedBy String
 
   @@id([walletAddress, gameId])
-
   @@map("games_and_users")
 }

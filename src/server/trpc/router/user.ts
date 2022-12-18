@@ -1,28 +1,25 @@
-import { z } from "zod";
-
-import { protectedProcedure, router } from "../trpc";
+import { protectedProcedure, router } from '../trpc';
+import { createUserSchema } from '@/root/schema/user.schema';
 
 export const userRouter = router({
-  create: protectedProcedure
-    .input(z.object({walletAddress: z.string()}))
-    .mutation(async ({ctx, input}) => {
-      const {walletAddress} = input;
-      const {prisma} = ctx;
+  create: protectedProcedure.input(createUserSchema).mutation(async ({ ctx, input }) => {
+    const { walletAddress } = input;
+    const { prisma } = ctx;
 
-      const user = await prisma.user.findFirst({
-        where: {
-          id: walletAddress,
-        },
-      })
+    const userExists = await prisma.user.findFirst({
+      where: {
+        id: walletAddress,
+      },
+    });
 
-      if (user) {
-        throw new Error("User already exists");
-      }
+    if (userExists) {
+      throw new Error('User already exists');
+    }
 
-      return await prisma.user.create({
-        data: {
-          id: walletAddress
-        },
-      });
-    }),
+    return await prisma.user.create({
+      data: {
+        id: walletAddress,
+      },
+    });
+  }),
 });

@@ -1,3 +1,3 @@
-import BuyMaticAndDashboardButtons from "./BuyMaticAndDashboardButtons";
+import BuyMaticAndDashboardButtons from './BuyMaticAndDashboardButtons';
 
 export default BuyMaticAndDashboardButtons;
