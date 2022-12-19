@@ -1,10 +1,9 @@
-import Game from './Game';
+import { trpc } from '@/root/utils/trpc';
 
-// import { games } from '@/root/constants';
+import Game from './Game';
+import LoadingSpinner from '@/root/components/LoadingSpinner';
 
 import styles from './GameShowcase.module.scss';
-import { trpc } from '@/root/utils/trpc';
-import LoadingSpinner from '@/root/components/LoadingSpinner';
 
 const GameShowcase = () => {
   const { data: games, isLoading } = trpc.game.getAll.useQuery();

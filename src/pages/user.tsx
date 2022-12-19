@@ -1,12 +1,11 @@
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Head from 'next/head';
 
 import GameForm from '@/root/components/GameForm';
 
 import { authOptions } from '@/root/pages/api/auth/[...nextauth]';
-import { trpc } from '@/root/utils/trpc';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
@@ -27,21 +26,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-const User = () => {
-  const { mutateAsync: createUserRecord, isLoading } = trpc.user.create.useMutation();
-  const { data: userData } = trpc.auth.getSession.useQuery();
-
-  const { data: sessionData } = useSession();
-  const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined },
-  );
-
-  async function createUser() {
-    if (!sessionData) return;
-    await createUserRecord({ walletAddress: sessionData.user?.address ?? '' });
-  }
-
+const User = ({ session }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
       <Head>
@@ -50,15 +35,9 @@ const User = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.address}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
+        <span>Logged in as {session.user?.address}</span>
       </p>
       <section className="text-center text-white">
-        <button className="my-3 rounded bg-main-yellow p-3 text-black" onClick={createUser}>
-          I want to play
-        </button>
-        {isLoading && <p>saving user...</p>}
-
         <GameForm />
 
         <section className="mt-24 text-white">

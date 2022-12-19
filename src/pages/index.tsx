@@ -1,8 +1,11 @@
 import Head from 'next/head';
 
 import GameShowcase from '@/root/components/GameShowcase/GameShowcase';
+import { trpc } from '@/root/utils/trpc';
 
 export default function Home() {
+  const { data: userSession } = trpc.auth.getSession.useQuery();
+
   return (
     <>
       <Head>

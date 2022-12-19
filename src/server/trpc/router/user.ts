@@ -1,8 +1,21 @@
-import { protectedProcedure, router } from '../trpc';
-import { createUserSchema } from '@/root/schema/user.schema';
+import { protectedProcedure, publicProcedure, router } from '../trpc';
+import { walletAddressSchema } from '@/root/schema/user.schema';
 
 export const userRouter = router({
-  create: protectedProcedure.input(createUserSchema).mutation(async ({ ctx, input }) => {
+  me: publicProcedure.input(walletAddressSchema).query(async ({ ctx, input }) => {
+    const { walletAddress } = input;
+    const { prisma } = ctx;
+
+    /*
+     - if this query returns data, it means that the user is in DB and he can play games
+    */
+    return await prisma.user.findFirst({
+      where: {
+        id: walletAddress,
+      },
+    });
+  }),
+  create: protectedProcedure.input(walletAddressSchema).mutation(async ({ ctx, input }) => {
     const { walletAddress } = input;
     const { prisma } = ctx;
 

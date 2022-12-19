@@ -1,17 +1,11 @@
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 
 import Logo from '@/root/components/Logo';
 import WalletConnect from '@/root/components/WalletConnect';
 import BuyMaticAndDashboardButtons from '@/root/components/BuyMaticAndDashboardButtons';
 
 const Header = () => {
-  // const {walletUserInfo} = useWalletUserSession()
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    console.log(status);
-  }, [status]);
+  const { data: session } = useSession();
 
   return (
     <header className="flex gap-3">
